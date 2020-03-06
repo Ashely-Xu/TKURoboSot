@@ -16,6 +16,7 @@ class MyStateMachine(Robot, StateMachine):
 
   def Callback(self, config, level):
     self.game_start = config['game_start']
+    self.test = config['test']
     self.our_side   = config['our_side']
     self.opp_side   = 'Blue' if self.our_side == 'Yellow' else 'Yellow'
     self.maximum_v = config['maximum_v']
@@ -46,12 +47,14 @@ class MyStateMachine(Robot, StateMachine):
     t = self.GetObjectInfo()
     side = self.opp_side
     if method == "Classic":
-      x, y, yaw = self.CC.ClassicRounding(t[side]['ang'],\
+      x, y, yaw = self.CC.StraightForward(\
                                           t['ball']['dis'],\
                                           t['ball']['ang'])
     self.MotionCtrl(x, y, yaw)
 
   def on_toAttack(self, method = "Classic"):
+
+      
     t = self.GetObjectInfo()
     side = self.opp_side
     if method == "Classic":
@@ -66,6 +69,6 @@ class MyStateMachine(Robot, StateMachine):
     if self.RobotBallHandle():
       ## Back to normal from Accelerator
       self.ChangeVelocityRange(self.minimum_v, self.maximum_v)
-      Core.last_ball_dis = 0
+      self.last_ball_dis = 0
 
     return self.RobotBallHandle()

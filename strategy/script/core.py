@@ -52,7 +52,7 @@ class Strategy(object):
 
         ## Keep Current State Running
         keepState = 'to' + self.robot.current_state.name
-        getattr(self.robot, keepState)
+        getattr(self.robot, keepState)()
 
         self.rate.sleep()
 
